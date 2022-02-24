@@ -1,7 +1,8 @@
-import requests
+import datetime
 import re
 import time
-import datetime
+
+import requests
 
 S = requests.Session()
 
