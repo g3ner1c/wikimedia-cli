@@ -63,7 +63,7 @@ def get_info():
         if revid > current_revid: # new revisions since last fetch
 
             # print(unix_timestamp)
-            # print(revid)
+            print(f"#{revid}")
             
             if fetches == 0:
 
