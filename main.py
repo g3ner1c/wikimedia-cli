@@ -16,7 +16,7 @@ def main():
 
     if args.article:
         article(args.title)
-    elif args.live:
+    elif args.revision:
         revision_feed(args.title)
     elif args.search:
         search(args.title)
