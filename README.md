@@ -13,6 +13,7 @@ A Wikipedia CLI written in Python
     - [Search for an article](#search-for-an-article)
     - [Read an article](#read-an-article)
     - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
+    - [Read an article with fuzzy searching](#read-an-article-with-fuzzy-searching)
     - [Live revision feed](#live-revision-feed)
   - [Ideas and TODO](#ideas-and-todo)
   - [Thanks to](#thanks-to)
@@ -29,24 +30,40 @@ python main.py -h
 
 ```txt
 $ python main.py -h
-usage: main.py [-h] [-a | -r | -s] title
+usage: wiki [-h] {article,search} ...
 
 Wikipedia CLI
 
 positional arguments:
-  title           Title of article
+  {article,search}
+    article         get article
+    search          search for relevant articles
+
+optional arguments:
+  -h, --help        show this help message and exit
+
+'wiki <command> -h' for help on specific commands
+```
+
+Use `-h` with a command for more info
+
+```txt
+$ python main.py article -h
+usage: wiki article [-h] [-s | -r] title
+
+positional arguments:
+  title           title of article
 
 optional arguments:
   -h, --help      show this help message and exit
-  -a, --article   get article
-  -r, --revision  get live revision feed
-  -s, --search    search for articles
+  -s, --summary   get short summary instead of entire page
+  -r, --revision  get live revision feed of article
 ```
 
 ### Search for an article
 
 ```txt
-$ python main.py -s "ukraine invasion"
+$ python main.py search "ukraine invasion"
 2022 Russian invasion of Ukraine
 Russo-Ukrainian War
 Protests against the 2022 Russian invasion of Ukraine
@@ -62,14 +79,20 @@ List of military engagements during the 2022 Russian invasion of Ukraine
 ### Read an article
 
 ```txt
-$ python main.py -a "2022 Russian invasion of Ukraine"
+$ python main.py article "2022 Russian invasion of Ukraine"
 On 24 February 2022, Russia launched a large-scale invasion of Ukraine, its neighbour to the southwest, marking a dramatic escalation of the Russo-Ukrainian War that began in 2014. It is the largest conventional warfare operation in Europe since World War II.The invasion was preceded by a Russian military build-up that started in early...
 ```
 
 ### Pipe into less for easier reading
 
 ```txt
-python main.py -a "2022 Russian invasion of Ukraine" | less
+python main.py article "2022 Russian invasion of Ukraine" | less
+```
+
+### Read an article with fuzzy searching
+
+```txt
+python main.py article "$(python main.py search "ukraine invasion" -n 1)" -s
 ```
 
 ### Live revision feed
@@ -77,7 +100,7 @@ python main.py -a "2022 Russian invasion of Ukraine" | less
 New revisions will automatically print to terminal as the command is left running
 
 ```txt
-$ python main.py -r "2022 Russian invasion of Ukraine"
+$ python main.py article -r "2022 Russian invasion of Ukraine"
 #1074359973
 Article Size: 348287 bytes
 by Leaky.Solar at 2022-02-27T21:30:18Z
