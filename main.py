@@ -1,30 +1,53 @@
 import argparse
-from commands.article import article
+
+from commands.article import article, summary
 from commands.revision import revision_feed
 from commands.search import search
 
+
 def main():
     
-    parser = argparse.ArgumentParser(description="Wikipedia CLI", prog="wiki")
-    commands = parser.add_mutually_exclusive_group()
-    
-    commands.add_argument('-A', '--article', help="get article", action="store_true")
-    commands.add_argument('-R', '--revision', help="get live revision feed", action="store_true")
-    commands.add_argument('-S', '--search', help="search for articles", action="store_true")
-    parser.add_argument('title', help="Title of article")
+    parser = argparse.ArgumentParser(description="Wikipedia CLI", epilog="'wiki <command> -h' for help on specific commands", prog="wiki")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # article subcommand
+    article_parser = subparsers.add_parser('article', help="get article")
+
+    article_flags = article_parser.add_mutually_exclusive_group()
+    article_flags.add_argument('-s', '--summary', help="get short summary instead of entire page", action='store_true', default=False)
+    article_flags.add_argument('-r', '--revision', help="get live revision feed of article", action='store_true', default=False)
+
+    article_parser.add_argument('title', help="title of article")
+
+    # search subcommand
+    search_parser = subparsers.add_parser('search', help="search for relevant articles")
+
+    search_flags = search_parser.add_mutually_exclusive_group()
+    search_flags.add_argument('-n', '--results', help="number of results to return", metavar='NUM', type=int, default=10)
+
+
+    search_parser.add_argument('title', help="title of article")
 
     args = parser.parse_args()
 
-    if args.article:
+    # print(args)
 
-        article(args.title)
+    if args.command == 'article':
 
-    elif args.revision:
+        if args.summary:
 
-        revision_feed(args.title)
+            summary(args.title)
 
-    elif args.search:
+        elif args.revision:
 
-        search(args.title)
+            revision_feed(args.title)
+
+        else:
+
+            article(args.title)
+
+    elif args.command == 'search':
+
+        search(args.title, args.results)
 
 main()
