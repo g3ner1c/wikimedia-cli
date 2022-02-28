@@ -20,8 +20,8 @@ A Wikipedia CLI written in Python
 ## Installation
 
 ```txt
-git clone https://github.com/awesomeplaya211/WikiEdits.git
-cd WikiEdits
+git clone https://github.com/awesomeplaya211/wikipedia-cli.git
+cd wikipedia-cli
 python main.py -h
 ```
 
