@@ -1,6 +1,14 @@
+from textwrap import wrap
+
 import requests
 
-def article(title):
+
+def fill(text, width=70, **kwargs):
+    return '\n'.join([line for para in text.splitlines() for line in wrap(para, width, **kwargs) or ['']])
+    #* ^^ newlines resets line width, textwrap.fill doesn't work
+    #* ^^ source: https://github.com/python/cpython/issues/46167#issuecomment-1093406764
+
+def article(title, fill_width=0):
     
     # returns article in plain text
 
@@ -25,9 +33,15 @@ def article(title):
     PAGE = DATA['query']['pages'][0]
     article = PAGE['extract']
 
-    print(article)
+    if fill_width:
 
-def summary(title):
+        print(fill(article, fill_width, replace_whitespace=False))
+
+    else:
+
+        print(article)
+
+def summary(title, fill_width=0):
 
     # returns article summary in plain text
 
@@ -53,4 +67,10 @@ def summary(title):
     PAGE = DATA['query']['pages'][0]
     summary = PAGE['extract']
 
-    print(summary)
+    if fill_width:
+    
+        print(fill(summary, fill_width, replace_whitespace=False))
+    
+    else:
+        
+        print(summary)
