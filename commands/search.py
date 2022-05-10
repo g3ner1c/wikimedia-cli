@@ -1,24 +1,18 @@
 import requests
 
-def search(query, results=10, suggestion=False):
+from .util import *
 
-    S = requests.Session()
-
-    URL = "https://en.wikipedia.org/w/api.php"
+def search(query, results=10, suggestion=False, lang="en"):
 
     PARAMS = {
-        'action': 'query',
         'list': 'search',
-        'srlimit': results,
         'srsearch': query,
-        'format': 'json'
+        'srlimit': results
     }
-
     if suggestion:
         PARAMS['srinfo'] = 'suggestion'
 
-    R = S.get(url=URL, params=PARAMS)
-    DATA = R.json()
+    DATA = request(PARAMS, lang)
     
     for article in DATA['query']['search']:
         print(article['title'])

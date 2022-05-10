@@ -21,6 +21,7 @@ def main():
         'article',
         help="get article")
 
+    # =============== article subcommand modes ===================
     article_flags = article_parser.add_mutually_exclusive_group()
 
     article_flags.add_argument(
@@ -34,16 +35,24 @@ def main():
         help="get live revision feed of article",
         action='store_true',
         default=False)
-    
+    # ==============================================================
+
     article_parser.add_argument(
         '-w', '--width',
-        help="set maximum width of output (default: no limit)",
+        help="set maximum width of output (default: 80)",
         type=int,
-        default=0) # redundant with fill_width but keep for consistency
+        default=80) # redundant with fill_width but keep for consistency
+    
+    article_parser.add_argument(
+        '--link',
+        help="print link to article after output",
+        action='store_true',
+        default=False)
 
     article_parser.add_argument(
         'title',
         help="title of article")
+
 
     # search subcommand
     search_parser = subparsers.add_parser(
@@ -51,7 +60,8 @@ def main():
         help="search for relevant articles")
 
     search_flags = search_parser.add_mutually_exclusive_group()
-    search_flags.add_argument(
+
+    search_parser.add_argument(
         '-n', '--results',
         help="number of results to return (default: 10)",
         metavar='NUM',

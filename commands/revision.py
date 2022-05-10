@@ -4,6 +4,8 @@ import time
 
 import requests
 
+from .util import *
+
 REGEX = r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z" # regex for latest date eg. 2020-01-01T00:00:00Z
 H_REGEX = r"/\* (.*) \*/\s?" # regex for heading eg. /* heading */
 # h_underline_regex = "\\\\033[4m\\\\033[95m\\g<1>\\\\033[00m\\\\033[0m\\n\\\\033[95m" # underline and color heading by regex subsitution
