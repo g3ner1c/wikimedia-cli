@@ -10,7 +10,7 @@ def fill(text, width: int = 70, **kwargs):
     #* ^^ source: https://github.com/python/cpython/issues/46167#issuecomment-1093406764
 
 
-def article(title, fill_width: int = 80, summary: bool = False, lang: str = "en"):
+def article(title, fill_width: int = 80, summary: bool = False, lang: str = "en") -> str:
 
     #* returns article in plain text
 
@@ -26,6 +26,6 @@ def article(title, fill_width: int = 80, summary: bool = False, lang: str = "en"
     article = request(PARAMS, lang)['query']['pages'][0]['extract']
 
     if fill_width:
-        print(fill(article, fill_width, replace_whitespace=False))
-    else:
-        print(article)
+        return fill(article, fill_width, replace_whitespace=False)
+        
+    return article

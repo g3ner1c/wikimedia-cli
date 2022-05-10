@@ -13,7 +13,6 @@ A Wikipedia CLI written in Python
     - [Search for an article](#search-for-an-article)
     - [Read an article](#read-an-article)
     - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
-    - [Read an article with fuzzy searching](#read-an-article-with-fuzzy-searching)
     - [Live revision feed](#live-revision-feed)
   - [Ideas and TODO](#ideas-and-todo)
   - [Thanks to](#thanks-to)
@@ -21,7 +20,7 @@ A Wikipedia CLI written in Python
 ## Installation
 
 ```txt
-git clone https://github.com/awesomeplaya211/wikipedia-cli.git
+git clone https://github.com/g3ner1c/wikipedia-cli.git
 cd wikipedia-cli
 python main.py -h
 ```
@@ -89,12 +88,6 @@ On 24 February 2022, Russia launched a large-scale invasion of Ukraine, its neig
 python main.py article "2022 Russian invasion of Ukraine" | less
 ```
 
-### Read an article with fuzzy searching
-
-```txt
-python main.py article "$(python main.py search "ukraine invasion" -n 1)" -s
-```
-
 ### Live revision feed
 
 New revisions will automatically print to terminal as the command is left running
@@ -132,7 +125,6 @@ attempted start of section for how crisis is seen through social media
 - Redirect to closest article if no exact match is found
 - Revision history
 - Main page and ITN/Ongoing
-- Support for localization
 - Packaging
   - PyPI
   - AUR?
