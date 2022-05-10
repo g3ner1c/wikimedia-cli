@@ -3,6 +3,7 @@ import argparse
 from commands.article import article, summary
 from commands.revision import revision_feed
 from commands.search import search
+from commands.util import *
 
 
 def main():
@@ -59,8 +60,6 @@ def main():
         'search',
         help="search for relevant articles")
 
-    search_flags = search_parser.add_mutually_exclusive_group()
-
     search_parser.add_argument(
         '-n', '--results',
         help="number of results to return (default: 10)",
@@ -90,9 +89,20 @@ def main():
         else:
 
             article(args.title, args.width)
+        
+        if args.link:
+
+            print("\n{}".format(
+                request({
+                    'prop': 'info',
+                    'inprop': 'url',
+                    'titles': args.title,
+                })['query']['pages'][0]['fullurl']
+            ))
 
     elif args.command == 'search':
 
-        search(args.title, args.results)
+        for title in search(args.title, args.results):
+            print(title)
 
 main()

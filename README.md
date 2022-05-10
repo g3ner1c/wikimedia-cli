@@ -129,7 +129,7 @@ attempted start of section for how crisis is seen through social media
 
 ## Ideas and TODO
 
-- ~~Scrape text from articles~~
+- Redirect to closest article if no exact match is found
 - Revision history
 - Main page and ITN/Ongoing
 - Support for localization
