@@ -50,11 +50,11 @@ def fetch_revision():
 
             # print(unix_timestamp)
             print(f"#{revid}")
-            
+
             if fetches == 0:
 
                 print(f"Article Size: {size} bytes")
-            
+
             else:
 
                 diff = size - page_size
@@ -83,7 +83,7 @@ def fetch_revision():
                 except AttributeError:
 
                     pass
-                    
+
                 comment_body = re.sub(H_REGEX, '', comment, 0, re.MULTILINE) # remove heading from comment
                 if not comment_body.isspace(): # check if not whitespace
 
@@ -93,7 +93,7 @@ def fetch_revision():
 
         fetches += 1
         page_size = size # update page size
-        
+
     current_revid = newest_revid # update current fetched revid
 
 

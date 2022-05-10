@@ -1,13 +1,13 @@
 import argparse
 
-from commands.article import article, summary
+from commands.article import article
 from commands.revision import revision_feed
 from commands.search import search
 from commands.util import *
 
 
 def main():
-    
+
     parser = argparse.ArgumentParser(
         description="Wikipedia CLI",
         epilog="'wiki <command> -h' for help on specific commands",
@@ -17,14 +17,29 @@ def main():
         dest="command",
         required=True)
 
-    # article subcommand
+    #* === common arguments ===
+    common_args = argparse.ArgumentParser(add_help=False)
+    common_args.add_argument(
+        'title',
+        help="title of article",
+        type=str)
+
+    common_args.add_argument(
+        '-l', '--lang',
+        help="ISO 639-1 language code of Wikipedia to use (default: en)",
+        type=str,
+        default="en")
+    # ==========================
+
+
+    #* === article command ===
     article_parser = subparsers.add_parser(
         'article',
-        help="get article")
+        help="get article",
+        parents=[common_args])
 
-    # =============== article subcommand modes ===================
+    # == article subcommand modes ==
     article_flags = article_parser.add_mutually_exclusive_group()
-
     article_flags.add_argument(
         '-s', '--summary',
         help="get short summary instead of entire page",
@@ -36,29 +51,26 @@ def main():
         help="get live revision feed of article",
         action='store_true',
         default=False)
-    # ==============================================================
+    # ==============================
 
     article_parser.add_argument(
         '-w', '--width',
         help="set maximum width of output (default: 80)",
         type=int,
         default=80) # redundant with fill_width but keep for consistency
-    
+
     article_parser.add_argument(
-        '--link',
-        help="print link to article after output",
+        '-u', '--url',
+        help="print url to article after output",
         action='store_true',
         default=False)
 
-    article_parser.add_argument(
-        'title',
-        help="title of article")
 
-
-    # search subcommand
+    #* === search command ===
     search_parser = subparsers.add_parser(
         'search',
-        help="search for relevant articles")
+        help="search for relevant articles",
+        parents=[common_args])
 
     search_parser.add_argument(
         '-n', '--results',
@@ -68,41 +80,33 @@ def main():
         default=10) # redundant but keep for consistency
 
 
-    search_parser.add_argument(
-        'title',
-        help="title of article")
-
     args = parser.parse_args()
 
     # print(args)
 
     if args.command == 'article':
 
-        if args.summary:
-
-            summary(args.title, args.width)
-
-        elif args.revision:
+        if args.revision:
 
             revision_feed(args.title)
 
         else:
 
-            article(args.title, args.width)
-        
-        if args.link:
+            article(args.title, args.width, args.summary, args.lang)
+
+        if args.url:
 
             print("\n{}".format(
                 request({
                     'prop': 'info',
                     'inprop': 'url',
                     'titles': args.title,
-                })['query']['pages'][0]['fullurl']
+                }, args.lang)['query']['pages'][0]['fullurl']
             ))
 
     elif args.command == 'search':
 
-        for title in search(args.title, args.results):
+        for title in search(args.title, args.results, args.lang):
             print(title)
 
 main()

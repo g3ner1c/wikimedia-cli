@@ -12,5 +12,5 @@ def request(params: dict, lang: str = "en") -> dict:
     URL = f"https://{lang}.wikipedia.org/w/api.php"
 
     R = S.get(url=URL, params=params)
-    
+
     return R.json()

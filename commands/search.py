@@ -1,8 +1,6 @@
-import requests
-
 from .util import *
 
-def search(query, results=10, lang="en"):
+def search(query, results: int = 10, lang: str = "en") -> list[str]:
 
     #* returns list of articles close to query
 
@@ -13,7 +11,7 @@ def search(query, results=10, lang="en"):
     }
 
     DATA = request(PARAMS, lang)
-    
+
     if DATA['query']['searchinfo']['totalhits'] == 0:
 
         if 'suggestion' in DATA['query']['searchinfo']:
