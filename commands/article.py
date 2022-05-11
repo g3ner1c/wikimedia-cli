@@ -23,9 +23,21 @@ def article(title, fill_width: int = 80, summary: bool = False, lang: str = "en"
     if summary:
         PARAMS['exintro'] = ''
 
-    article = request(PARAMS, lang)['query']['pages'][0]['extract']
+    try:
+
+        article_text = request(PARAMS, lang)['query']['pages'][0]['extract']
+
+        if not article_text:
+
+            raise KeyError
+
+    except KeyError: # article not found
+
+        return article(search(title, 1, lang)[0], fill_width, summary, lang) # search for similar articles
+
 
     if fill_width:
-        return fill(article, fill_width, replace_whitespace=False)
-        
-    return article
+
+        return fill(article_text, fill_width, replace_whitespace=False)
+
+    return article_text
