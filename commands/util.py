@@ -2,8 +2,8 @@ import requests
 
 def request(params: dict, lang: str = "en", reuse_session: requests.sessions.Session = None) -> dict:
 
-    params['format'] = "json"
-    params['formatversion'] = "2"
+    params['format'] = 'json'
+    params['formatversion'] = '2'
     if 'action' not in params:
         params['action'] = 'query' # defaults to query
 

@@ -122,7 +122,6 @@ attempted start of section for how crisis is seen through social media
 
 ## Ideas and TODO
 
-- Redirect to closest article if no exact match is found
 - Revision history
 - Main page and ITN/Ongoing
 - Packaging

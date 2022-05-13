@@ -1,6 +1,6 @@
 from .util import *
 
-def search(query, results: int = 10, lang: str = "en") -> list[str]:
+def search(query: str, results: int = 10, lang: str = "en") -> list[str]:
 
     #* returns list of articles close to query
 

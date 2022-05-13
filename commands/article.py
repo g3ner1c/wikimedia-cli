@@ -10,7 +10,7 @@ def fill(text, width: int = 70, **kwargs):
     #* ^^ source: https://github.com/python/cpython/issues/46167#issuecomment-1093406764
 
 
-def article(title, fill_width: int = 80, summary: bool = False, lang: str = "en") -> str:
+def article(title: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True) -> str:
 
     #* returns article in plain text
 
@@ -33,8 +33,11 @@ def article(title, fill_width: int = 80, summary: bool = False, lang: str = "en"
 
     except KeyError: # article not found
 
-        return article(search(title, 1, lang)[0], fill_width, summary, lang) # search for similar articles
+        if recurse:
 
+            return article(search(title, 1, lang)[0], fill_width, summary, lang, recurse=False) # search for similar articles
+
+        return "Article not found"
 
     if fill_width:
 
