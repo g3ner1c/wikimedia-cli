@@ -12,8 +12,10 @@ A Wikipedia CLI written in Python
   - [Usage](#usage)
     - [Search for an article](#search-for-an-article)
     - [Read an article](#read-an-article)
-    - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
+      - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
+    - [Article summary](#article-summary)
     - [Live revision feed](#live-revision-feed)
+    - [Localization](#localization)
   - [Ideas and TODO](#ideas-and-todo)
   - [Thanks to](#thanks-to)
 
@@ -22,13 +24,14 @@ A Wikipedia CLI written in Python
 ```txt
 git clone https://github.com/g3ner1c/wikipedia-cli.git
 cd wikipedia-cli
-python main.py -h
+echo "alias wiki='$(pwd)/main.py'" >> <shell-profile-path>
+wiki -h
 ```
 
 ## Usage
 
 ```txt
-$ python main.py -h
+$ wiki -h
 usage: wiki [-h] {article,search} ...
 
 Wikipedia CLI
@@ -47,22 +50,25 @@ optional arguments:
 Use `-h` with a command for more info
 
 ```txt
-$ python main.py article -h
-usage: wiki article [-h] [-s | -r] title
+$ wiki article -h
+usage: wiki article [-h] [-l LANG] [-s] [-w WIDTH] [-u] title
 
 positional arguments:
-  title           title of article
+  title                 title of article
 
-optional arguments:
-  -h, --help      show this help message and exit
-  -s, --summary   get short summary instead of entire page
-  -r, --revision  get live revision feed of article
+options:
+  -h, --help            show this help message and exit
+  -l LANG, --lang LANG  ISO 639-1 language code of Wikipedia to use (default: en)
+  -s, --summary         get short summary instead of entire page
+  -w WIDTH, --width WIDTH
+                        set maximum width of output (default: 80)
+  -u, --url             print url to article after output
 ```
 
 ### Search for an article
 
 ```txt
-$ python main.py search "ukraine invasion"
+$ wiki search "ukraine invasion"
 2022 Russian invasion of Ukraine
 Russo-Ukrainian War
 Protests against the 2022 Russian invasion of Ukraine
@@ -78,22 +84,37 @@ List of military engagements during the 2022 Russian invasion of Ukraine
 ### Read an article
 
 ```txt
-$ python main.py article "2022 Russian invasion of Ukraine"
-On 24 February 2022, Russia launched a large-scale invasion of Ukraine, its neighbour to the southwest, marking a dramatic escalation of the Russo-Ukrainian War that began in 2014. It is the largest conventional warfare operation in Europe since World War II.The invasion was preceded by a Russian military build-up that started in early...
+$ wiki article "ukraine invasion"
+On 24 February 2022, Russia invaded Ukraine, marking a steep escalation of the
+Russo-Ukrainian War, which had begun in 2014. The invasion has caused Europe's
+largest refugee crisis since World War II, with more than 6.2 million Ukrainians
+fleeing the country and a third of the population displaced. ...
 ```
 
-### Pipe into less for easier reading
+#### Pipe into less for easier reading
 
 ```txt
-python main.py article "2022 Russian invasion of Ukraine" | less
+wiki article "ukraine invasion" | less
+```
+
+### Article summary
+
+Use the `-s` flag with `article` to get a summary instead of the full article
+
+```txt
+$ wiki article "ukraine invasion" | wc
+   1373   14231   93024
+$ wiki article -s "ukraine invasion" | wc
+     57     662    4427
 ```
 
 ### Live revision feed
 
 New revisions will automatically print to terminal as the command is left running
+Exact title of article is required, case-insensitive *(fuzzy searching in the works)*
 
 ```txt
-$ python main.py article -r "2022 Russian invasion of Ukraine"
+$ wiki revision -f "2022 Russian invasion of Ukraine"
 #1074359973
 Article Size: 348287 bytes
 by Leaky.Solar at 2022-02-27T21:30:18Z
@@ -120,8 +141,22 @@ Section: Reactions
 attempted start of section for how crisis is seen through social media
 ```
 
+### Localization
+
+Use the ISO 639-1 language code with `-f` to access a different language wiki
+
+```txt
+$ wiki -l fr article "invasion de l'ukraine"
+L'invasion de l'Ukraine par la Russie en 2022, aussi appelée guerre d'Ukraine ou
+guerre russo-ukrainienne de 2022, est une campagne militaire déclenchée le 24
+février 2022 sur ordre du président russe Vladimir Poutine.
+Elle intervient à la suite de la crise ukrainienne, née du mouvement Euromaïdan
+de 2013-2014 qui avait été suivi de la guerre du Donbass à partir de 2014. ...
+```
+
 ## Ideas and TODO
 
+- **Full Documentation - Important**
 - Revision history
 - Main page and ITN/Ongoing
 - Packaging
