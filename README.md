@@ -70,16 +70,25 @@ options:
 
 ```txt
 $ wiki search "ukraine invasion"
-2022 Russian invasion of Ukraine
-Russo-Ukrainian War
-Protests against the 2022 Russian invasion of Ukraine
-International reactions to the 2022 Russian invasion of Ukraine
-Soviet–Ukrainian War
-List of invasions and occupations of Ukraine
-Timeline of the 2022 Russian invasion of Ukraine
-Order of battle for the 2022 Russian invasion of Ukraine
-War crimes during the 2022 Russian invasion of Ukraine
-List of military engagements during the 2022 Russian invasion of Ukraine
+(1) 2022 Russian invasion of Ukraine
+(2) Russo-Ukrainian War
+(3) Timeline of the 2022 Russian invasion of Ukraine
+(4) Government and intergovernmental reactions to the 2022 Russian invasion of Ukraine
+(5) List of invasions and occupations of Ukraine
+(6) Legality of the 2022 Russian invasion of Ukraine
+(7) Prelude to the 2022 Russian invasion of Ukraine
+(8) List of Russian generals killed during the 2022 invasion of Ukraine
+(9) Ukrainian–Soviet War
+(10) Protests against the 2022 Russian invasion of Ukraine
+
+Enter article index
+> 6
+
+The 2022 Russian invasion of Ukraine violated international law (including the
+Charter of the United Nations), and constitutes a crime of aggression in
+international criminal law. The invasion has also been called unlawful under
+some countries' domestic criminal codes — including those of Ukraine and Russia—
+although procedural obstacles exist to prosecutions under these laws. ...
 ```
 
 ### Read an article
@@ -112,6 +121,7 @@ $ wiki article -s "ukraine invasion" | wc
 ### Live revision feed
 
 New revisions will automatically print to terminal as the command is left running
+
 Exact title of article is required, case-insensitive *(fuzzy searching in the works)*
 
 ```txt

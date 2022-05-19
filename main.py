@@ -28,7 +28,7 @@ def main():
         '-l', '--lang',
         help="ISO 639-1 language code of Wikipedia to use (default: en)",
         type=str,
-        default="en") #* change this to set default language 
+        default="en") #* change this to set default language
     # ==========================
 
 
@@ -73,7 +73,19 @@ def main():
         type=int,
         default=10) # redundant but keep for consistency
 
-    
+    search_parser.add_argument(
+        '--no-index',
+        help="don't index results, sets --no-article",
+        action='store_true',
+        default=False)
+
+    search_parser.add_argument(
+        '--no-article',
+        help="don't ask for an article query",
+        action='store_true',
+        default=False)
+
+
     #* === revision command ===
     revision_parser = subparsers.add_parser(
         'revision',
@@ -109,8 +121,21 @@ def main():
 
     elif args.command == 'search':
 
-        for title in search(args.title, args.results, args.lang):
-            print(title)
+        SEARCH = search(args.title, args.results, args.lang)
+
+        if args.no_index:
+            for title in SEARCH:
+                print(title)
+                args.no_article = True
+        else:
+            for index, title in enumerate(SEARCH, 1):
+                print(f"({index}) {title}")
+
+        if not args.no_article:
+
+            article_index = input("\nEnter article index\n> ")
+
+            print(f'\n{article(SEARCH[int(article_index) - 1], lang=args.lang)}')
 
     elif args.command == 'revision':
 
