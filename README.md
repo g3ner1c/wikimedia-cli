@@ -52,7 +52,7 @@ Use `-h` with a command for more info
 
 ```txt
 $ wiki article -h
-usage: wiki article [-h] [-l LANG] [-s] [-w WIDTH] [-u] title
+usage: wiki article [-h] [-l LANG] [-s] [-w WIDTH] [-u] [--no-title] title
 
 positional arguments:
   title                 title of article
@@ -60,10 +60,11 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -l LANG, --lang LANG  ISO 639-1 language code of Wikipedia to use (default: en)
-  -s, --summary         get short summary instead of entire page
+  -s, --summary         get short summary instead of entire page, sets --no-title
   -w WIDTH, --width WIDTH
                         set maximum width of output (default: 80)
   -u, --url             print url to article after output
+  --no-title            don't print title
 ```
 
 ### Search for an article
@@ -84,6 +85,9 @@ $ wiki search "ukraine invasion"
 Enter article index
 > 6
 
+Legality of the 2022 Russian invasion of Ukraine
+--------------------------------------------------------------------------------
+
 The 2022 Russian invasion of Ukraine violated international law (including the
 Charter of the United Nations), and constitutes a crime of aggression in
 international criminal law. The invasion has also been called unlawful under
@@ -95,6 +99,10 @@ although procedural obstacles exist to prosecutions under these laws. ...
 
 ```txt
 $ wiki article "ukraine invasion"
+
+2022 Russian invasion of Ukraine
+--------------------------------------------------------------------------------
+
 On 24 February 2022, Russia invaded Ukraine, marking a steep escalation of the
 Russo-Ukrainian War, which had begun in 2014. The invasion has caused Europe's
 largest refugee crisis since World War II, with more than 6.2 million Ukrainians
@@ -158,6 +166,10 @@ Use the ISO 639-1 language code with `-f` to access a different language wiki
 
 ```txt
 $ wiki article -l fr "invasion de l'ukraine"
+
+Invasion de l'Ukraine par la Russie en 2022
+--------------------------------------------------------------------------------
+
 L'invasion de l'Ukraine par la Russie en 2022, aussi appelée guerre d'Ukraine ou
 guerre russo-ukrainienne de 2022, est une campagne militaire déclenchée le 24
 février 2022 sur ordre du président russe Vladimir Poutine.

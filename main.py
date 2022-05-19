@@ -1,6 +1,6 @@
 import argparse
 
-from commands.article import article
+from commands.article import article, title_print
 from commands.revision import revision_feed
 from commands.search import search
 from commands.util import *
@@ -29,7 +29,6 @@ def main():
         help="ISO 639-1 language code of Wikipedia to use (default: en)",
         type=str,
         default="en") #* change this to set default language
-    # ==========================
 
 
     #* === article command ===
@@ -38,14 +37,11 @@ def main():
         help="get articles",
         parents=[common_args])
 
-    # == article subcommand modes ==
-    article_flags = article_parser.add_mutually_exclusive_group()
-    article_flags.add_argument(
+    article_parser.add_argument(
         '-s', '--summary',
-        help="get short summary instead of entire page",
+        help="get short summary instead of entire page, sets --no-title",
         action='store_true',
         default=False)
-    # ==============================
 
     article_parser.add_argument(
         '-w', '--width',
@@ -56,6 +52,12 @@ def main():
     article_parser.add_argument(
         '-u', '--url',
         help="print url to article after output",
+        action='store_true',
+        default=False)
+
+    article_parser.add_argument(
+        '--no-title',
+        help="don't print title",
         action='store_true',
         default=False)
 
@@ -107,8 +109,16 @@ def main():
 
     if args.command == 'article':
 
-        title, text = article(args.title, args.width, args.summary, args.lang)
-        print(text)
+        ARTICLE = article(args.title, args.width, args.summary, args.lang)
+
+        if args.summary:
+            args.no_title = True
+
+        if args.no_title:
+            print(ARTICLE[1])
+
+        else:
+            title_print(*ARTICLE, width=args.width)
 
         if args.url:
 
@@ -116,7 +126,7 @@ def main():
                 request({
                     'prop': 'info',
                     'inprop': 'url',
-                    'titles': title,
+                    'titles': ARTICLE[0],
                 }, args.lang)['query']['pages'][0]['fullurl']
             ))
 
@@ -130,13 +140,13 @@ def main():
                 args.no_article = True
         else:
             for index, title in enumerate(SEARCH, 1):
-                print(f"({index}) {title}")
+                # fancy right-justified index
+                print(" " * (len(str(args.results)) - len(str(index))) + f"({index}) {title}")
 
         if not args.no_article:
 
             article_index = input("\nEnter article index\n> ")
-
-            print(f'\n{article(SEARCH[int(article_index) - 1], lang=args.lang)}')
+            title_print(*article(SEARCH[int(article_index) - 1], lang=args.lang))
 
     elif args.command == 'revision':
 
