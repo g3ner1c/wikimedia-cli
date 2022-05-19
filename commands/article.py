@@ -10,9 +10,9 @@ def fill(text, width: int = 70, **kwargs):
     #* ^^ source: https://github.com/python/cpython/issues/46167#issuecomment-1093406764
 
 
-def article(title: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True) -> str:
+def article(title: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True) -> (str):
 
-    #* returns article in plain text
+    #* returns article as (title, plain text)
 
     PARAMS = {
         'prop': 'extracts',
@@ -37,10 +37,10 @@ def article(title: str, fill_width: int = 80, summary: bool = False, lang: str =
 
             return article(search(title, 1, lang)[0], fill_width, summary, lang, recurse=False) # search for similar articles
 
-        return "Article not found"
+        return "", "Article not found"
 
     if fill_width:
 
-        return fill(article_text, fill_width, replace_whitespace=False)
+        article_text = fill(article_text, fill_width, replace_whitespace=False)
 
-    return article_text
+    return title, article_text

@@ -17,7 +17,7 @@ def search(query: str, results: int = 10, lang: str = "en") -> list[str]:
         if 'suggestion' in DATA['query']['searchinfo']:
             return search(DATA['query']['searchinfo']['suggestion'], results, lang)
             # recurse to search with suggestion
-            
+
         return ["No results found"]
 
     else:

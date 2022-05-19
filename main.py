@@ -107,7 +107,8 @@ def main():
 
     if args.command == 'article':
 
-        print(article(args.title, args.width, args.summary, args.lang))
+        title, text = article(args.title, args.width, args.summary, args.lang)
+        print(text)
 
         if args.url:
 
@@ -115,7 +116,7 @@ def main():
                 request({
                     'prop': 'info',
                     'inprop': 'url',
-                    'titles': args.title,
+                    'titles': title,
                 }, args.lang)['query']['pages'][0]['fullurl']
             ))
 
