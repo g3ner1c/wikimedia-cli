@@ -32,17 +32,18 @@ wiki -h
 
 ```txt
 $ wiki -h
-usage: wiki [-h] {article,search} ...
+usage: wiki [-h] {article,search,revision} ...
 
 Wikipedia CLI
 
 positional arguments:
-  {article,search}
-    article         get article
-    search          search for relevant articles
+  {article,search,revision}
+    article             get articles
+    search              search for articles
+    revision            view revision history and live revisions of articles
 
-optional arguments:
-  -h, --help        show this help message and exit
+options:
+  -h, --help            show this help message and exit
 
 'wiki <command> -h' for help on specific commands
 ```
@@ -146,7 +147,7 @@ attempted start of section for how crisis is seen through social media
 Use the ISO 639-1 language code with `-f` to access a different language wiki
 
 ```txt
-$ wiki -l fr article "invasion de l'ukraine"
+$ wiki article -l fr "invasion de l'ukraine"
 L'invasion de l'Ukraine par la Russie en 2022, aussi appelée guerre d'Ukraine ou
 guerre russo-ukrainienne de 2022, est une campagne militaire déclenchée le 24
 février 2022 sur ordre du président russe Vladimir Poutine.
