@@ -202,7 +202,7 @@ de 2013-2014 qui avait été suivi de la guerre du Donbass à partir de 2014. ..
 
 - **Full Documentation - Important**
 - Other wikimedia wikis
-  - Wikitionary
+  - Wiktionary
   - Wikimedia commons
   - Wikidata
   - Wikinews
