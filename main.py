@@ -1,41 +1,52 @@
 import argparse
 
-from commands.article import article, title_print
-from commands.revision import revision_feed
-from commands.search import search
+from commands.wikipedia.article import article, title_print
+from commands.wikipedia.revision import revision_feed
+from commands.wikipedia.search import search
 from commands.util import *
 
 
 def main():
 
     parser = argparse.ArgumentParser(
-        description="Wikipedia CLI",
+        description="Wikimedia CLI",
         epilog="'wiki <command> -h' for help on specific commands",
         prog="wiki")
 
     subparsers = parser.add_subparsers(
         dest="command",
         required=True)
+    
+    #* === wikipedia command ===
 
-    #* === common arguments ===
-    common_args = argparse.ArgumentParser(add_help=False)
-    common_args.add_argument(
+    wikipedia = subparsers.add_parser(
+        'pedia',
+        help="get information from wikipedia",
+        description="get information from wikipedia",
+        epilog="'wiki pedia <subcommand> -h' for help on specific subcommands").add_subparsers(
+        dest="subcommand",
+        required=True)
+
+    #* === wikipedia common arguments ===
+    pedia_common_args = argparse.ArgumentParser(add_help=False)
+    pedia_common_args.add_argument(
         'title',
         help="title of article",
         type=str)
 
-    common_args.add_argument(
+    pedia_common_args.add_argument(
         '-l', '--lang',
         help="ISO 639-1 language code of Wikipedia to use (default: en)",
         type=str,
         default="en") #* change this to set default language
 
 
-    #* === article command ===
-    article_parser = subparsers.add_parser(
+    ##* == article subcommand ==
+    article_parser = wikipedia.add_parser(
         'article',
         help="get articles",
-        parents=[common_args])
+        description="get articles",
+        parents=[pedia_common_args])
 
     article_parser.add_argument(
         '-s', '--summary',
@@ -62,11 +73,12 @@ def main():
         default=False)
 
 
-    #* === search command ===
-    search_parser = subparsers.add_parser(
+    ##* == search subcommand ==
+    search_parser = wikipedia.add_parser(
         'search',
         help="search for articles",
-        parents=[common_args])
+        description="search for articles",
+        parents=[pedia_common_args])
 
     search_parser.add_argument(
         '-n', '--results',
@@ -88,70 +100,73 @@ def main():
         default=False)
 
 
-    #* === revision command ===
-    revision_parser = subparsers.add_parser(
+    ##* == revision subcommand ==
+    revision_parser = wikipedia.add_parser(
         'revision',
         help="view revision history and live revisions of articles",
-        parents=[common_args])
+        description="view revision history and live revisions of articles",
+        parents=[pedia_common_args])
 
-    # == revision subcommand modes ==
+    ### == revision subcommand modes ==
     revision_flags = revision_parser.add_mutually_exclusive_group()
     revision_flags.add_argument(
         '-f', '--feed',
         help="view live revision feed",
         action='store_true',
         default=False)
-    # ===============================
+    ### ===============================
 
     args = parser.parse_args()
 
     # print(args)
 
-    if args.command == 'article':
+    if args.command == 'pedia':
 
-        ARTICLE = article(args.title, args.width, args.summary, args.lang)
+        if args.subcommand == 'article':
 
-        if args.summary:
-            args.no_title = True
+            ARTICLE = article(args.title, args.width, args.summary, args.lang)
 
-        if args.no_title:
-            print(ARTICLE[1])
+            if args.summary:
+                args.no_title = True
 
-        else:
-            title_print(*ARTICLE, width=args.width)
+            if args.no_title:
+                print(ARTICLE[1])
 
-        if args.url:
+            else:
+                title_print(*ARTICLE, width=args.width)
 
-            print("\n{}".format(
-                request({
-                    'prop': 'info',
-                    'inprop': 'url',
-                    'titles': ARTICLE[0],
-                }, args.lang)['query']['pages'][0]['fullurl']
-            ))
+            if args.url:
 
-    elif args.command == 'search':
+                print("\n{}".format(
+                    request({
+                        'prop': 'info',
+                        'inprop': 'url',
+                        'titles': ARTICLE[0],
+                    }, args.lang)['query']['pages'][0]['fullurl']
+                ))
 
-        SEARCH = search(args.title, args.results, args.lang)
+        elif args.subcommand == 'search':
 
-        if args.no_index:
-            for title in SEARCH:
-                print(title)
-                args.no_article = True
-        else:
-            for index, title in enumerate(SEARCH, 1):
-                # fancy right-justified index
-                print(" " * (len(str(args.results)) - len(str(index))) + f"({index}) {title}")
+            SEARCH = search(args.title, args.results, args.lang)
 
-        if not args.no_article:
+            if args.no_index:
+                for title in SEARCH:
+                    print(title)
+                    args.no_article = True
+            else:
+                for index, title in enumerate(SEARCH, 1):
+                    # fancy right-justified index
+                    print(" " * (len(str(args.results)) - len(str(index))) + f"({index}) {title}")
 
-            article_index = input("\nEnter article index\n> ")
-            title_print(*article(SEARCH[int(article_index) - 1], lang=args.lang))
+            if not args.no_article:
 
-    elif args.command == 'revision':
+                article_index = input("\nEnter article index\n> ")
+                title_print(*article(SEARCH[int(article_index) - 1], lang=args.lang))
 
-        if args.feed:
+        elif args.subcommand == 'revision':
 
-            revision_feed(args.title)
+            if args.feed:
+
+                revision_feed(args.title)
 
 main()
