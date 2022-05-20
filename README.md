@@ -71,15 +71,15 @@ options:
 
 ```txt
 $ wiki search "ukraine invasion"
-(1) 2022 Russian invasion of Ukraine
-(2) Russo-Ukrainian War
-(3) Timeline of the 2022 Russian invasion of Ukraine
-(4) Government and intergovernmental reactions to the 2022 Russian invasion of Ukraine
-(5) List of invasions and occupations of Ukraine
-(6) Legality of the 2022 Russian invasion of Ukraine
-(7) Prelude to the 2022 Russian invasion of Ukraine
-(8) List of Russian generals killed during the 2022 invasion of Ukraine
-(9) Ukrainian–Soviet War
+ (1) 2022 Russian invasion of Ukraine
+ (2) Russo-Ukrainian War
+ (3) Timeline of the 2022 Russian invasion of Ukraine
+ (4) Government and intergovernmental reactions to the 2022 Russian invasion of Ukraine
+ (5) List of invasions and occupations of Ukraine
+ (6) Legality of the 2022 Russian invasion of Ukraine
+ (7) Prelude to the 2022 Russian invasion of Ukraine
+ (8) List of Russian generals killed during the 2022 invasion of Ukraine
+ (9) Ukrainian–Soviet War
 (10) Protests against the 2022 Russian invasion of Ukraine
 
 Enter article index
@@ -180,6 +180,11 @@ de 2013-2014 qui avait été suivi de la guerre du Donbass à partir de 2014. ..
 ## Ideas and TODO
 
 - **Full Documentation - Important**
+- Other wikimedia wikis
+  - Wikitionary
+  - Wikimedia commons
+  - Wikidata
+  - Wikinews
 - Revision history
 - Main page and ITN/Ongoing
 - Packaging
