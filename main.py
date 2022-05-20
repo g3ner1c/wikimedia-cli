@@ -21,9 +21,9 @@ def main():
 
     wikipedia = subparsers.add_parser(
         'pedia',
-        help="get articles from wikipedia",
-        description="get articles from wikipedia",
-        epilog="'wiki pedia <command> -h' for help on specific commands").add_subparsers(
+        help="get information from wikipedia",
+        description="get information from wikipedia",
+        epilog="'wiki pedia <subcommand> -h' for help on specific subcommands").add_subparsers(
         dest="subcommand",
         required=True)
 

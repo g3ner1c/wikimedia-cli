@@ -1,21 +1,22 @@
-# wikipedia-cli
+# wikimedia-cli
 
-A Wikipedia CLI written in Python
+A lightweight, minimally dependent, Wikimedia CLI written in Python
 
 [Still in early developement](#ideas-and-todo)
 
 ## Contents
 
-- [wikipedia-cli](#wikipedia-cli)
+- [wikimedia-cli](#wikimedia-cli)
   - [Contents](#contents)
   - [Installation](#installation)
   - [Usage](#usage)
-    - [Search for an article](#search-for-an-article)
-    - [Read an article](#read-an-article)
-      - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
-    - [Article summary](#article-summary)
-    - [Live revision feed](#live-revision-feed)
-    - [Localization](#localization)
+    - [Wikipedia](#wikipedia)
+      - [Search for an article](#search-for-an-article)
+      - [Read an article](#read-an-article)
+        - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
+      - [Article summary](#article-summary)
+      - [Live revision feed](#live-revision-feed)
+      - [Localization](#localization)
   - [Ideas and TODO](#ideas-and-todo)
   - [Thanks to](#thanks-to)
 
@@ -32,9 +33,27 @@ wiki -h
 
 ```txt
 $ wiki -h
-usage: wiki [-h] {article,search,revision} ...
+usage: wiki [-h] {pedia} ...
 
-Wikipedia CLI
+Wikimedia CLI
+
+positional arguments:
+  {pedia}
+    pedia     get articles from wikipedia
+
+options:
+  -h, --help  show this help message and exit
+
+'wiki <command> -h' for help on specific commands
+```
+
+Use `-h` with a command or subcommand for more info
+
+```txt
+$ wiki pedia -h
+usage: wiki pedia [-h] {article,search,revision} ...
+
+get information from wikipedia
 
 positional arguments:
   {article,search,revision}
@@ -45,14 +64,14 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
 
-'wiki <command> -h' for help on specific commands
+'wiki pedia <subcommand> -h' for help on specific subcommands
 ```
 
-Use `-h` with a command for more info
-
 ```txt
-$ wiki article -h
-usage: wiki article [-h] [-l LANG] [-s] [-w WIDTH] [-u] [--no-title] title
+$ wiki pedia article -h
+usage: wiki pedia article [-h] [-l LANG] [-s] [-w WIDTH] [-u] [--no-title] title
+
+get articles
 
 positional arguments:
   title                 title of article
@@ -67,10 +86,12 @@ options:
   --no-title            don't print title
 ```
 
-### Search for an article
+### Wikipedia
+
+#### Search for an article
 
 ```txt
-$ wiki search "ukraine invasion"
+$ wiki pedia search "ukraine invasion"
  (1) 2022 Russian invasion of Ukraine
  (2) Russo-Ukrainian War
  (3) Timeline of the 2022 Russian invasion of Ukraine
@@ -95,10 +116,10 @@ some countries' domestic criminal codes — including those of Ukraine and Russi
 although procedural obstacles exist to prosecutions under these laws. ...
 ```
 
-### Read an article
+#### Read an article
 
 ```txt
-$ wiki article "ukraine invasion"
+$ wiki pedia article "ukraine invasion"
 
 2022 Russian invasion of Ukraine
 --------------------------------------------------------------------------------
@@ -109,31 +130,31 @@ largest refugee crisis since World War II, with more than 6.2 million Ukrainians
 fleeing the country and a third of the population displaced. ...
 ```
 
-#### Pipe into less for easier reading
+##### Pipe into less for easier reading
 
 ```txt
-wiki article "ukraine invasion" | less
+wiki pedia article "ukraine invasion" | less
 ```
 
-### Article summary
+#### Article summary
 
 Use the `-s` flag with `article` to get a summary instead of the full article
 
 ```txt
-$ wiki article "ukraine invasion" | wc
+$ wiki pedia article "ukraine invasion" | wc
    1373   14231   93024
-$ wiki article -s "ukraine invasion" | wc
+$ wiki pedia article -s "ukraine invasion" | wc
      57     662    4427
 ```
 
-### Live revision feed
+#### Live revision feed
 
 New revisions will automatically print to terminal as the command is left running
 
 Exact title of article is required, case-insensitive *(fuzzy searching in the works)*
 
 ```txt
-$ wiki revision -f "2022 Russian invasion of Ukraine"
+$ wiki pedia revision -f "2022 Russian invasion of Ukraine"
 #1074359973
 Article Size: 348287 bytes
 by Leaky.Solar at 2022-02-27T21:30:18Z
@@ -160,12 +181,12 @@ Section: Reactions
 attempted start of section for how crisis is seen through social media
 ```
 
-### Localization
+#### Localization
 
 Use the ISO 639-1 language code with `-f` to access a different language wiki
 
 ```txt
-$ wiki article -l fr "invasion de l'ukraine"
+$ wiki pedia article -l fr "invasion de l'ukraine"
 
 Invasion de l'Ukraine par la Russie en 2022
 --------------------------------------------------------------------------------
