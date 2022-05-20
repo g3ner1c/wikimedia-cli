@@ -13,10 +13,13 @@ A lightweight, minimally dependent, Wikimedia CLI written in Python
     - [Wikipedia](#wikipedia)
       - [Search for an article](#search-for-an-article)
       - [Read an article](#read-an-article)
-        - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
       - [Article summary](#article-summary)
-      - [Live revision feed](#live-revision-feed)
-      - [Localization](#localization)
+    - [Wiktionary](#wiktionary)
+      - [Search for a phrase](#search-for-a-phrase)
+      - [Get information on a phrase](#get-information-on-a-phrase)
+    - [Pipe into less for easier reading](#pipe-into-less-for-easier-reading)
+    - [Live revision feed](#live-revision-feed)
+    - [Localization](#localization)
   - [Ideas and TODO](#ideas-and-todo)
   - [Thanks to](#thanks-to)
 
@@ -33,13 +36,14 @@ wiki -h
 
 ```txt
 $ wiki -h
-usage: wiki [-h] {pedia} ...
+usage: wiki [-h] {p,t} ...
 
 Wikimedia CLI
 
 positional arguments:
-  {pedia}
-    pedia     get articles from wikipedia
+  {p,t}
+    p         wikipedia
+    t         wiktionary
 
 options:
   -h, --help  show this help message and exit
@@ -51,9 +55,9 @@ Use `-h` with a command or subcommand for more info
 
 ```txt
 $ wiki pedia -h
-usage: wiki pedia [-h] {article,search,revision} ...
+usage: wiki p [-h] {article,search,revision} ...
 
-get information from wikipedia
+wikipedia commands
 
 positional arguments:
   {article,search,revision}
@@ -64,12 +68,12 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
 
-'wiki pedia <subcommand> -h' for help on specific subcommands
+'wiki p <subcommand> -h' for help on specific subcommands
 ```
 
 ```txt
 $ wiki pedia article -h
-usage: wiki pedia article [-h] [-l LANG] [-s] [-w WIDTH] [-u] [--no-title] title
+usage: wiki p article [-h] [-l LANG] [-s] [-w WIDTH] [-u] [--no-title] title
 
 get articles
 
@@ -82,7 +86,7 @@ options:
   -s, --summary         get short summary instead of entire page, sets --no-title
   -w WIDTH, --width WIDTH
                         set maximum width of output (default: 80)
-  -u, --url             print url to article after output
+  -u, --url             print url after output
   --no-title            don't print title
 ```
 
@@ -91,7 +95,7 @@ options:
 #### Search for an article
 
 ```txt
-$ wiki pedia search "ukraine invasion"
+$ wiki p search "ukraine invasion"
  (1) 2022 Russian invasion of Ukraine
  (2) Russo-Ukrainian War
  (3) Timeline of the 2022 Russian invasion of Ukraine
@@ -119,7 +123,7 @@ although procedural obstacles exist to prosecutions under these laws. ...
 #### Read an article
 
 ```txt
-$ wiki pedia article "ukraine invasion"
+$ wiki p article "ukraine invasion"
 
 2022 Russian invasion of Ukraine
 --------------------------------------------------------------------------------
@@ -130,31 +134,114 @@ largest refugee crisis since World War II, with more than 6.2 million Ukrainians
 fleeing the country and a third of the population displaced. ...
 ```
 
-##### Pipe into less for easier reading
-
-```txt
-wiki pedia article "ukraine invasion" | less
-```
-
 #### Article summary
 
 Use the `-s` flag with `article` to get a summary instead of the full article
 
 ```txt
-$ wiki pedia article "ukraine invasion" | wc
+$ wiki p article "ukraine invasion" | wc
    1373   14231   93024
-$ wiki pedia article -s "ukraine invasion" | wc
+$ wiki p article -s "ukraine invasion" | wc
      57     662    4427
 ```
 
-#### Live revision feed
+### Wiktionary
+
+#### Search for a phrase
+
+```txt
+$ wiki t search "effect"
+ (1) effect
+ (2) to the effect
+ (3) take effect
+ (4) in effect
+ (5) come into effect
+ (6) adverse effect
+ (7) Seebeck effect
+ (8) domino effect
+ (9) Peltier effect
+(10) put into effect
+
+Enter phrase index
+> 8
+
+domino effect
+--------------------------------------------------------------------------------
+
+
+== English ==
+
+
+=== Etymology ===
+An allusion to a row of dominoes in which the fall of one leads to a cascade of
+falling pieces.
+
+
+=== Noun ===
+domino effect (plural domino effects)
+
+The situation in which one event sets off a chain of additional events.
+(politics, historical) The theory that, if South Vietnam fell to Communism, it
+would be followed by Cambodia, Laos, additional Southeast Asian countries, other
+Asian countries, and likely even elsewhere.
+Synonym: domino theory
+...
+```
+
+#### Get information on a phrase
+  
+```txt
+$ wiki t phrase "cool"
+
+cool
+--------------------------------------------------------------------------------
+
+
+== English ==
+
+
+=== Alternative forms ===
+(slang) c00l, coo, k00l, kewl, kool, qewl, qool
+
+
+=== Pronunciation ===
+enPR: ko͞ol, IPA(key): /kuːl/
+Rhymes: -uːl
+
+
+=== Etymology 1 ===
+From Middle English cool, from Old English cōl (“cool, cold, tranquil, calm”),
+from Proto-West Germanic *kōl(ī), from Proto-Germanic *kōlaz, *kōluz (“cool”),
+from Proto-Indo-European *gel- (“cold”). Cognate with Saterland Frisian köil
+(“cool”), West Frisian koel (“cool”), Dutch koel (“cool”), Limburgish kool
+(“cool”), German Low German köhl (“cool”), German kühl (“cool”). Related to
+cold.
+
+
+==== Adjective ====
+cool (comparative cooler, superlative coolest)
+
+ Having a slightly low temperature; mildly or pleasantly cold.
+Synonym: chilly
+Antonyms: lukewarm, tepid, warm
+Allowing or suggesting heat relief.
+...
+```
+
+### Pipe into less for easier reading
+
+```txt
+wiki p article "ukraine invasion" | less
+```
+
+### Live revision feed
 
 New revisions will automatically print to terminal as the command is left running
 
 Exact title of article is required, case-insensitive *(fuzzy searching in the works)*
 
 ```txt
-$ wiki pedia revision -f "2022 Russian invasion of Ukraine"
+$ wiki p revision -f "2022 Russian invasion of Ukraine"
 #1074359973
 Article Size: 348287 bytes
 by Leaky.Solar at 2022-02-27T21:30:18Z
@@ -181,12 +268,12 @@ Section: Reactions
 attempted start of section for how crisis is seen through social media
 ```
 
-#### Localization
+### Localization
 
 Use the ISO 639-1 language code with `-f` to access a different language wiki
 
 ```txt
-$ wiki pedia article -l fr "invasion de l'ukraine"
+$ wiki p article -l fr "invasion de l'ukraine"
 
 Invasion de l'Ukraine par la Russie en 2022
 --------------------------------------------------------------------------------
@@ -201,8 +288,8 @@ de 2013-2014 qui avait été suivi de la guerre du Donbass à partir de 2014. ..
 ## Ideas and TODO
 
 - **Full Documentation - Important**
+- Wiktionary and Wikipedia article formatting (e.g. bold, italics, colors, links, images, etc.)
 - Other wikimedia wikis
-  - Wiktionary
   - Wikimedia commons
   - Wikidata
   - Wikinews
