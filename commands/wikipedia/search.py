@@ -1,4 +1,4 @@
-from .util import *
+from ..util import *
 
 def search(query: str, results: int = 10, lang: str = "en") -> list[str]:
 

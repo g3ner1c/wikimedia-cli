@@ -1,7 +1,7 @@
 from textwrap import wrap
 
 from .search import search
-from .util import *
+from ..util import *
 
 
 def fill(text, width: int = 70, **kwargs):

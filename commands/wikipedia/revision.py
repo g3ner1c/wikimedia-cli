@@ -4,7 +4,7 @@ import time
 
 import requests
 
-from .util import *
+from ..util import *
 
 REGEX = r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z" # regex for latest date eg. 2020-01-01T00:00:00Z
 H_REGEX = r"/\* (.*) \*/\s?" # regex for heading eg. /* heading */

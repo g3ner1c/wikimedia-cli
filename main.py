@@ -1,8 +1,8 @@
 import argparse
 
-from commands.article import article, title_print
-from commands.revision import revision_feed
-from commands.search import search
+from commands.wikipedia.article import article, title_print
+from commands.wikipedia.revision import revision_feed
+from commands.wikipedia.search import search
 from commands.util import *
 
 
@@ -16,6 +16,8 @@ def main():
     subparsers = parser.add_subparsers(
         dest="command",
         required=True)
+    
+    #* === wikipedia command ===
 
     wikipedia = subparsers.add_parser(
         'pedia',
@@ -39,7 +41,7 @@ def main():
         default="en") #* change this to set default language
 
 
-    #* === article command ===
+    ##* == article subcommand ==
     article_parser = wikipedia.add_parser(
         'article',
         help="get articles",
@@ -71,7 +73,7 @@ def main():
         default=False)
 
 
-    #* === search command ===
+    ##* == search subcommand ==
     search_parser = wikipedia.add_parser(
         'search',
         help="search for articles",
@@ -98,21 +100,21 @@ def main():
         default=False)
 
 
-    #* === revision command ===
+    ##* == revision subcommand ==
     revision_parser = wikipedia.add_parser(
         'revision',
         help="view revision history and live revisions of articles",
         description="view revision history and live revisions of articles",
         parents=[pedia_common_args])
 
-    # == revision subcommand modes ==
+    ### == revision subcommand modes ==
     revision_flags = revision_parser.add_mutually_exclusive_group()
     revision_flags.add_argument(
         '-f', '--feed',
         help="view live revision feed",
         action='store_true',
         default=False)
-    # ===============================
+    ### ===============================
 
     args = parser.parse_args()
 
