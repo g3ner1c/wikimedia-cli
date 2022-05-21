@@ -10,7 +10,7 @@ REGEX = r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z" # regex for latest d
 H_REGEX = r"/\* (.*) \*/\s?" # regex for heading eg. /* heading */
 # h_underline_regex = "\\\\033[4m\\\\033[95m\\g<1>\\\\033[00m\\\\033[0m\\n\\\\033[95m" # underline and color heading by regex subsitution
 
-def p_revision_feed(title: str, interval: int = 5, lang: str = "en"):
+def t_revision_feed(phrase: str, interval: int = 5, lang: str = "en"):
 
     current_revid = 0
     newest_revid = 0
@@ -19,7 +19,7 @@ def p_revision_feed(title: str, interval: int = 5, lang: str = "en"):
 
     PARAMS = {
         'prop': 'revisions',
-        'titles': title,
+        'titles': phrase,
         'rvlimit': '10',
         'rvprop': 'ids|size|timestamp|user|comment',
         'rvslots': 'main'
@@ -29,7 +29,7 @@ def p_revision_feed(title: str, interval: int = 5, lang: str = "en"):
 
     while True:
 
-        DATA = request_wikipedia(PARAMS, lang, S)
+        DATA = request_wiktionary(PARAMS, lang, S)
 
         PAGE = DATA['query']['pages'][0]
 

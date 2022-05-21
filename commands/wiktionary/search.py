@@ -1,6 +1,6 @@
 from ..util import *
 
-def p_search(query: str, results: int = 10, lang: str = "en") -> list[str]:
+def t_search(query: str, results: int = 10, lang: str = "en") -> list[str]:
 
     #* returns list of articles close to query
 
@@ -10,15 +10,15 @@ def p_search(query: str, results: int = 10, lang: str = "en") -> list[str]:
         'srlimit': results
     }
 
-    DATA = request_wikipedia(PARAMS, lang)
+    DATA = request_wiktionary(PARAMS, lang)
 
     if DATA['query']['searchinfo']['totalhits'] == 0:
 
         if 'suggestion' in DATA['query']['searchinfo']:
-            return p_search(DATA['query']['searchinfo']['suggestion'], results, lang)
+            return t_search(DATA['query']['searchinfo']['suggestion'], results, lang)
             # recurse to search with suggestion
 
         return ["No results found"]
 
     else:
-        return [article['title'] for article in DATA['query']['search']]
+        return [phrase['title'] for phrase in DATA['query']['search']]

@@ -1,8 +1,11 @@
 import argparse
 
-from commands.wikipedia.article import article, title_print
-from commands.wikipedia.revision import revision_feed
-from commands.wikipedia.search import search
+from commands.wikipedia.article import p_article
+from commands.wikipedia.revision import p_revision_feed
+from commands.wikipedia.search import p_search
+from commands.wiktionary.phrase import t_phrase
+from commands.wiktionary.revision import t_revision_feed
+from commands.wiktionary.search import t_search
 from commands.util import *
 
 
@@ -16,14 +19,15 @@ def main():
     subparsers = parser.add_subparsers(
         dest="command",
         required=True)
+
     
     #* === wikipedia command ===
 
     wikipedia = subparsers.add_parser(
-        'pedia',
-        help="get information from wikipedia",
-        description="get information from wikipedia",
-        epilog="'wiki pedia <subcommand> -h' for help on specific subcommands").add_subparsers(
+        'p',
+        help="wikipedia",
+        description="wikipedia commands",
+        epilog="'wiki p <subcommand> -h' for help on specific subcommands").add_subparsers(
         dest="subcommand",
         required=True)
 
@@ -42,31 +46,31 @@ def main():
 
 
     ##* == article subcommand ==
-    article_parser = wikipedia.add_parser(
+    p_article_parser = wikipedia.add_parser(
         'article',
         help="get articles",
         description="get articles",
         parents=[pedia_common_args])
 
-    article_parser.add_argument(
+    p_article_parser.add_argument(
         '-s', '--summary',
         help="get short summary instead of entire page, sets --no-title",
         action='store_true',
         default=False)
 
-    article_parser.add_argument(
+    p_article_parser.add_argument(
         '-w', '--width',
         help="set maximum width of output (default: 80)",
         type=int,
         default=80) # redundant with fill_width but keep for consistency
 
-    article_parser.add_argument(
+    p_article_parser.add_argument(
         '-u', '--url',
-        help="print url to article after output",
+        help="print url after output",
         action='store_true',
         default=False)
 
-    article_parser.add_argument(
+    p_article_parser.add_argument(
         '--no-title',
         help="don't print title",
         action='store_true',
@@ -74,57 +78,159 @@ def main():
 
 
     ##* == search subcommand ==
-    search_parser = wikipedia.add_parser(
+    p_search_parser = wikipedia.add_parser(
         'search',
         help="search for articles",
         description="search for articles",
         parents=[pedia_common_args])
 
-    search_parser.add_argument(
+    p_search_parser.add_argument(
         '-n', '--results',
         help="number of results to return (default: 10)",
         metavar='NUM',
         type=int,
         default=10) # redundant but keep for consistency
 
-    search_parser.add_argument(
+    p_search_parser.add_argument(
         '--no-index',
         help="don't index results, sets --no-article",
         action='store_true',
         default=False)
 
-    search_parser.add_argument(
-        '--no-article',
+    p_search_parser.add_argument(
+        '--no-query',
         help="don't ask for an article query",
         action='store_true',
         default=False)
 
 
     ##* == revision subcommand ==
-    revision_parser = wikipedia.add_parser(
+    p_revision_parser = wikipedia.add_parser(
         'revision',
         help="view revision history and live revisions of articles",
         description="view revision history and live revisions of articles",
         parents=[pedia_common_args])
 
     ### == revision subcommand modes ==
-    revision_flags = revision_parser.add_mutually_exclusive_group()
-    revision_flags.add_argument(
+    p_revision_flags = p_revision_parser.add_mutually_exclusive_group()
+    p_revision_flags.add_argument(
         '-f', '--feed',
         help="view live revision feed",
         action='store_true',
         default=False)
     ### ===============================
 
+
+    #* === wiktionary command ===
+
+    wiktionary = subparsers.add_parser(
+        't',
+        help="wiktionary",
+        description="wiktionary commands",  
+        epilog="'wiki t <subcommand> -h' for help on specific subcommands").add_subparsers(
+        dest="subcommand",
+        required=True)
+
+    #* === wiktionary common arguments ===
+    tionary_common_args = argparse.ArgumentParser(add_help=False)
+    tionary_common_args.add_argument(
+        'phrase',
+        help="name of phrase",
+        type=str)
+
+    tionary_common_args.add_argument(
+        '-l', '--lang',
+        help="ISO 639-1 language code of Wikipedia to use (default: en)",
+        type=str,
+        default="en") #* change this to set default language
+
+    
+    ##* == phrase subcommand ==
+
+    t_phrase_parser = wiktionary.add_parser(
+        'phrase',
+        help="get phrases",
+        description="get phrases",
+        parents=[tionary_common_args])
+
+    t_phrase_parser.add_argument(
+        '-s', '--summary',
+        help="get short summary instead of entire page, sets --no-title",
+        action='store_true',
+        default=False)
+
+    t_phrase_parser.add_argument(
+        '-w', '--width',
+        help="set maximum width of output (default: 80)",
+        type=int,
+        default=80) # redundant with fill_width but keep for consistency
+
+    t_phrase_parser.add_argument(
+        '-u', '--url',
+        help="print url after output",
+        action='store_true',
+        default=False)
+
+    t_phrase_parser.add_argument(
+        '--no-title',
+        help="don't print title",
+        action='store_true',
+        default=False)
+
+
+    ##* == search subcommand ==
+    t_search_parser = wiktionary.add_parser(
+        'search',
+        help="search for phrases",
+        description="search for phrases",
+        parents=[tionary_common_args])
+
+    t_search_parser.add_argument(
+        '-n', '--results',
+        help="number of results to return (default: 10)",
+        metavar='NUM',
+        type=int,
+        default=10) # redundant but keep for consistency
+
+    t_search_parser.add_argument(
+        '--no-index',
+        help="don't index results, sets --no-article",
+        action='store_true',
+        default=False)
+
+    t_search_parser.add_argument(
+        '--no-query',
+        help="don't ask for a phrase query",
+        action='store_true',
+        default=False)
+
+
+    ##* == revision subcommand ==
+    t_revision_parser = wiktionary.add_parser(
+        'revision',
+        help="view revision history and live revisions of phrases",
+        description="view revision history and live revisions of phrases",
+        parents=[tionary_common_args])
+
+    ### == revision subcommand modes ==
+    t_revision_flags = t_revision_parser.add_mutually_exclusive_group()
+    t_revision_flags.add_argument(
+        '-f', '--feed',
+        help="view live revision feed",
+        action='store_true',
+        default=False)
+    ### ===============================
+
+
     args = parser.parse_args()
 
     # print(args)
 
-    if args.command == 'pedia':
+    if args.command == 'p':
 
         if args.subcommand == 'article':
 
-            ARTICLE = article(args.title, args.width, args.summary, args.lang)
+            ARTICLE = p_article(args.title, args.width, args.summary, args.lang)
 
             if args.summary:
                 args.no_title = True
@@ -138,7 +244,7 @@ def main():
             if args.url:
 
                 print("\n{}".format(
-                    request({
+                    request_wikipedia({
                         'prop': 'info',
                         'inprop': 'url',
                         'titles': ARTICLE[0],
@@ -147,7 +253,7 @@ def main():
 
         elif args.subcommand == 'search':
 
-            SEARCH = search(args.title, args.results, args.lang)
+            SEARCH = p_search(args.title, args.results, args.lang)
 
             if args.no_index:
                 for title in SEARCH:
@@ -161,12 +267,60 @@ def main():
             if not args.no_article:
 
                 article_index = input("\nEnter article index\n> ")
-                title_print(*article(SEARCH[int(article_index) - 1], lang=args.lang))
+                title_print(*p_article(SEARCH[int(article_index) - 1], lang=args.lang))
 
         elif args.subcommand == 'revision':
 
             if args.feed:
 
-                revision_feed(args.title)
+                p_revision_feed(args.title, lang=args.lang)
+    
+    elif args.command == 't':
+
+        if args.subcommand == 'phrase':
+
+            PHRASE = t_phrase(args.phrase, args.width, args.summary, args.lang)
+
+            if args.summary:
+                args.no_title = True
+
+            if args.no_title:
+                print(PHRASE[1])
+
+            else:
+                title_print(*PHRASE, width=args.width)
+
+            if args.url:
+
+                print("\n{}".format(
+                    request_wiktionary({
+                        'prop': 'info',
+                        'inprop': 'url',
+                        'titles': PHRASE[0],
+                    }, args.lang)['query']['pages'][0]['fullurl']
+                ))
+
+        elif args.subcommand == 'search':
+
+            SEARCH = t_search(args.phrase, args.results, args.lang)
+
+            if args.no_index:
+                for phrase in SEARCH:
+                    print(phrase)
+                    args.no_article = True
+            else:
+                for index, phrase in enumerate(SEARCH, 1):
+                    print(" " * (len(str(args.results)) - len(str(index))) + f"({index}) {phrase}")
+
+            if not args.no_article:
+
+                article_index = input("\nEnter phrase index\n> ")
+                title_print(*t_phrase(SEARCH[int(article_index) - 1], lang=args.lang))
+        
+        elif args.subcommand == 'revision':
+
+            if args.feed:
+
+                t_revision_feed(args.phrase, lang=args.lang)
 
 main()
