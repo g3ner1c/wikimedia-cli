@@ -4,6 +4,7 @@ from commands.wikipedia.article import p_article
 from commands.wikipedia.revision import p_revision_feed
 from commands.wikipedia.search import p_search
 from commands.wiktionary.phrase import t_phrase
+from commands.wiktionary.revision import t_revision_feed
 from commands.wiktionary.search import t_search
 from commands.util import *
 
@@ -97,7 +98,7 @@ def main():
         default=False)
 
     p_search_parser.add_argument(
-        '--no-article',
+        '--no-query',
         help="don't ask for an article query",
         action='store_true',
         default=False)
@@ -134,7 +135,7 @@ def main():
     tionary_common_args = argparse.ArgumentParser(add_help=False)
     tionary_common_args.add_argument(
         'phrase',
-        help="phrase",
+        help="name of phrase",
         type=str)
 
     tionary_common_args.add_argument(
@@ -198,10 +199,27 @@ def main():
         default=False)
 
     t_search_parser.add_argument(
-        '--no-article',
+        '--no-query',
         help="don't ask for a phrase query",
         action='store_true',
         default=False)
+
+
+    ##* == revision subcommand ==
+    t_revision_parser = wiktionary.add_parser(
+        'revision',
+        help="view revision history and live revisions of phrases",
+        description="view revision history and live revisions of phrases",
+        parents=[tionary_common_args])
+
+    ### == revision subcommand modes ==
+    t_revision_flags = t_revision_parser.add_mutually_exclusive_group()
+    t_revision_flags.add_argument(
+        '-f', '--feed',
+        help="view live revision feed",
+        action='store_true',
+        default=False)
+    ### ===============================
 
 
     args = parser.parse_args()
@@ -255,7 +273,7 @@ def main():
 
             if args.feed:
 
-                p_revision_feed(args.title)
+                p_revision_feed(args.title, lang=args.lang)
     
     elif args.command == 't':
 
@@ -298,5 +316,11 @@ def main():
 
                 article_index = input("\nEnter phrase index\n> ")
                 title_print(*t_phrase(SEARCH[int(article_index) - 1], lang=args.lang))
+        
+        elif args.subcommand == 'revision':
+
+            if args.feed:
+
+                t_revision_feed(args.phrase, lang=args.lang)
 
 main()
