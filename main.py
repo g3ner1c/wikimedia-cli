@@ -1,12 +1,14 @@
 import argparse
 
+from commands.util import *
 from commands.wikipedia.article import p_article
+from commands.wikipedia.http import p_get
 from commands.wikipedia.revision import p_revision_feed
 from commands.wikipedia.search import p_search
 from commands.wiktionary.phrase import t_phrase
+from commands.wiktionary.http import t_get
 from commands.wiktionary.revision import t_revision_feed
 from commands.wiktionary.search import t_search
-from commands.util import *
 
 
 def main():
@@ -120,6 +122,30 @@ def main():
         default=False)
     ### ===============================
 
+    ##* == http subcommand ==
+    p_http_parser = wikipedia.add_parser(
+        'http',
+        help="request HTTP GET methods to the Wikipedia API",
+        description="request HTTP GET methods to the Wikipedia API")
+
+    p_http_parser.add_argument(
+        'params',
+        help="parameters to pass to the Wikipedia API",
+        type=str,
+        nargs='*')
+    
+    p_http_parser.add_argument(
+        '-j', '--json',
+        help="take input as JSON",
+        action='store_true',
+        default=False)
+    
+    p_http_parser.add_argument(
+        '-l', '--lang',
+        help="ISO 639-1 language code of Wikipedia to use (default: en)",
+        type=str,
+        default="en")
+        
 
     #* === wiktionary command ===
 
@@ -221,6 +247,30 @@ def main():
         default=False)
     ### ===============================
 
+    ##* == http subcommand ==
+    t_http_parser = wiktionary.add_parser(
+        'http',
+        help="request HTTP GET methods to the Wiktionary API",
+        description="request HTTP GET methods to the Wiktionary API")
+
+    t_http_parser.add_argument(
+        'params',
+        help="parameters to pass to the Wiktionary API",
+        type=str,
+        nargs='*')
+    
+    t_http_parser.add_argument(
+        '-j', '--json',
+        help="take input as JSON",
+        action='store_true',
+        default=False)
+    
+    t_http_parser.add_argument(
+        '-l', '--lang',
+        help="ISO 639-1 language code of Wiktionary to use (default: en)",
+        type=str,
+        default="en")
+
 
     args = parser.parse_args()
 
@@ -274,6 +324,10 @@ def main():
             if args.feed:
 
                 p_revision_feed(args.title, lang=args.lang)
+
+        elif args.subcommand == 'http':
+
+            print(p_get(args.params, args.json, args.lang))
     
     elif args.command == 't':
 
@@ -322,5 +376,9 @@ def main():
             if args.feed:
 
                 t_revision_feed(args.phrase, lang=args.lang)
+
+        elif args.subcommand == 'http':
+
+            print(t_get(args.params, args.json, args.lang))
 
 main()

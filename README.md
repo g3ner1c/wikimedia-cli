@@ -28,7 +28,7 @@ A lightweight, minimally dependent, Wikimedia CLI written in Python
 ```txt
 git clone https://github.com/g3ner1c/wikipedia-cli.git
 cd wikipedia-cli
-echo "alias wiki='$(pwd)/main.py'" >> <shell-profile-path>
+echo "alias wiki='python $(pwd)/main.py'" >> <shell-profile-path>
 wiki -h
 ```
 
