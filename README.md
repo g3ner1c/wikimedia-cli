@@ -1,5 +1,13 @@
 # wikimedia-cli
 
+[![Documentation Status](https://readthedocs.org/projects/wikimedia-cli/badge/?version=latest)](https://wikimedia-cli.readthedocs.io/en/latest/?badge=latest)
+[![CodeFactor](https://www.codefactor.io/repository/github/g3ner1c/wikimedia-cli/badge)](https://www.codefactor.io/repository/github/g3ner1c/wikimedia-cli)
+[![Open issues](https://img.shields.io/github/issues/g3ner1c/wikimedia-cli)](https://github.com/g3ner1c/wikimedia-cli/issues)
+[![Open PRs](https://img.shields.io/github/issues-pr/g3ner1c/wikimedia-cli)](https://github.com/g3ner1c/wikimedia-cli/pulls)
+[![License](https://img.shields.io/github/license/g3ner1c/wikimedia-cli)](./LICENSE)
+[![Python 3.x](https://img.shields.io/badge/python-3.x-green.svg)](https://www.python.org/)
+[![Repo stars](https://img.shields.io/github/stars/g3ner1c/wikimedia-cli?style=social)](https://github.com/g3ner1c/wikimedia-cli/stargazers)
+
 A lightweight, minimally dependent, Wikimedia CLI written in Python
 
 [Still in early developement](#ideas-and-todo)
