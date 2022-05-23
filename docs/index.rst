@@ -7,10 +7,11 @@
    intro.rst
 
 Table of Contents
-=================
+##################
 
 .. toctree::
-   :maxdepth: 10
+   :maxdepth: 3
 
    installation.md
-   commands/commands.rst
+   commands/wikipedia/wikipedia.rst
+   commands/wiktionary/wiktionary.rst
