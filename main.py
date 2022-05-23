@@ -38,12 +38,14 @@ def main():
     pedia_common_args.add_argument(
         'title',
         help="title of article",
+        metavar='<title>',
         type=str)
 
     pedia_common_args.add_argument(
         '-l', '--lang',
         help="ISO 639-1 language code of Wikipedia to use (default: en)",
         type=str,
+        metavar='<lang>',
         default="en") #* change this to set default language
 
 
@@ -64,6 +66,7 @@ def main():
         '-w', '--width',
         help="set maximum width of output (default: 80)",
         type=int,
+        metavar='<width>',
         default=80) # redundant with fill_width but keep for consistency
 
     p_article_parser.add_argument(
@@ -89,13 +92,13 @@ def main():
     p_search_parser.add_argument(
         '-n', '--results',
         help="number of results to return (default: 10)",
-        metavar='NUM',
+        metavar='<num>',
         type=int,
         default=10) # redundant but keep for consistency
 
     p_search_parser.add_argument(
         '--no-index',
-        help="don't index results, sets --no-article",
+        help="don't index results, sets --no-query",
         action='store_true',
         default=False)
 
@@ -144,6 +147,7 @@ def main():
         '-l', '--lang',
         help="ISO 639-1 language code of Wikipedia to use (default: en)",
         type=str,
+        metavar='<lang>',
         default="en")
         
 
@@ -162,12 +166,14 @@ def main():
     tionary_common_args.add_argument(
         'phrase',
         help="name of phrase",
+        metavar='<phrase>',
         type=str)
 
     tionary_common_args.add_argument(
         '-l', '--lang',
         help="ISO 639-1 language code of Wikipedia to use (default: en)",
         type=str,
+        metavar='<lang>',
         default="en") #* change this to set default language
 
     
@@ -189,6 +195,7 @@ def main():
         '-w', '--width',
         help="set maximum width of output (default: 80)",
         type=int,
+        metavar='<width>',
         default=80) # redundant with fill_width but keep for consistency
 
     t_phrase_parser.add_argument(
@@ -214,13 +221,13 @@ def main():
     t_search_parser.add_argument(
         '-n', '--results',
         help="number of results to return (default: 10)",
-        metavar='NUM',
+        metavar='<num>',
         type=int,
         default=10) # redundant but keep for consistency
 
     t_search_parser.add_argument(
         '--no-index',
-        help="don't index results, sets --no-article",
+        help="don't index results, sets --no-query",
         action='store_true',
         default=False)
 
@@ -257,6 +264,7 @@ def main():
         'params',
         help="parameters to pass to the Wiktionary API",
         type=str,
+        metavar='<params>',
         nargs='*')
     
     t_http_parser.add_argument(
@@ -269,6 +277,7 @@ def main():
         '-l', '--lang',
         help="ISO 639-1 language code of Wiktionary to use (default: en)",
         type=str,
+        metavar='<lang>',
         default="en")
 
 
@@ -308,13 +317,13 @@ def main():
             if args.no_index:
                 for title in SEARCH:
                     print(title)
-                    args.no_article = True
+                    args.no_query = True
             else:
                 for index, title in enumerate(SEARCH, 1):
                     # fancy right-justified index
                     print(" " * (len(str(args.results)) - len(str(index))) + f"({index}) {title}")
 
-            if not args.no_article:
+            if not args.no_query:
 
                 article_index = input("\nEnter article index\n> ")
                 title_print(*p_article(SEARCH[int(article_index) - 1], lang=args.lang))
@@ -361,12 +370,12 @@ def main():
             if args.no_index:
                 for phrase in SEARCH:
                     print(phrase)
-                    args.no_article = True
+                    args.no_query = True
             else:
                 for index, phrase in enumerate(SEARCH, 1):
                     print(" " * (len(str(args.results)) - len(str(index))) + f"({index}) {phrase}")
 
-            if not args.no_article:
+            if not args.no_query:
 
                 article_index = input("\nEnter phrase index\n> ")
                 title_print(*t_phrase(SEARCH[int(article_index) - 1], lang=args.lang))
