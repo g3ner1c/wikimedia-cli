@@ -23,7 +23,7 @@ Introduction
 
 
 .. image:: https://img.shields.io/github/license/g3ner1c/wikimedia-cli
-   :target: ./LICENSE
+   :target: https://github.com/g3ner1c/wikimedia-cli/blob/master/LICENSE
    :alt: License
 
 
