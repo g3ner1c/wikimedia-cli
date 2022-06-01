@@ -1,0 +1,21 @@
+from ..util import request_wiktionary
+
+
+def t_search(query: str, results: int = 10, lang: str = "en") -> list[str]:
+
+    # * returns list of articles close to query
+
+    PARAMS = {"list": "search", "srsearch": query, "srlimit": results}
+
+    DATA = request_wiktionary(PARAMS, lang)
+
+    if DATA["query"]["searchinfo"]["totalhits"] == 0:
+
+        if "suggestion" in DATA["query"]["searchinfo"]:
+            return t_search(DATA["query"]["searchinfo"]["suggestion"], results, lang)
+            # recurse to search with suggestion
+
+        return ["No results found"]
+
+    else:
+        return [phrase["title"] for phrase in DATA["query"]["search"]]

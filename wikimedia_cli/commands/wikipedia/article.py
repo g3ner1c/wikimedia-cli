@@ -1,31 +1,29 @@
-from ..util import *
+from ..util import fill, request_wikipedia
 from .search import p_search
 
 
-def p_article(title: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True) -> (str):
+def p_article(
+    title: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True
+) -> (str):
 
-    #* returns article as (title, plain text)
+    # * returns article as (title, plain text)
 
-    title = p_search(title, 1, lang)[0] # fuzzy search, exact match evaluates to itself
+    title = p_search(title, 1, lang)[0]  # fuzzy search, exact match evaluates to itself
 
-    PARAMS = {
-        'prop': 'extracts',
-        'titles': title,
-        'explaintext': ''
-    }
+    PARAMS = {"prop": "extracts", "titles": title, "explaintext": ""}
 
     if summary:
-        PARAMS['exintro'] = ''
+        PARAMS["exintro"] = ""
 
     try:
 
-        article_text = request_wikipedia(PARAMS, lang)['query']['pages'][0]['extract']
+        article_text = request_wikipedia(PARAMS, lang)["query"]["pages"][0]["extract"]
 
         if not article_text:
 
             raise KeyError
 
-    except KeyError: # article not found
+    except KeyError:  # article not found
 
         if recurse:
 

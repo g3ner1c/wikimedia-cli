@@ -9,14 +9,13 @@ def p_get(params: list, json: bool = False, lang: str = "en") -> dict:
 
     URL = f"https://{lang}.wikipedia.org/w/api.php"
 
-
     if json:
 
         params = loads(params[0])
 
     else:
 
-        params = { p[0]:(p[1] if len(p) == 2 else '') for p in [param.split('=') for param in params] }
+        params = {p[0]: (p[1] if len(p) == 2 else "") for p in [param.split("=") for param in params]}
 
     R = S.get(url=URL, params=params)
 
