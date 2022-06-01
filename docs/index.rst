@@ -34,12 +34,12 @@ wikimedia-cli
 
 
 .. image:: https://img.shields.io/pypi/pyversions/wikimedia-cli
-   :target: https://pypi.org/project/tetris/
+   :target: https://pypi.org/project/wikimedia-cli/
    :alt: Supported Python versions
 
 
 .. image:: https://img.shields.io/pypi/v/wikimedia-cli
-   :target: https://pypi.org/project/tetris/
+   :target: https://pypi.org/project/wikimedia-cli/
    :alt: PyPI version
 
 

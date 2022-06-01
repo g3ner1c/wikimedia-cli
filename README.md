@@ -7,8 +7,8 @@
 [![Open PRs](https://img.shields.io/github/issues-pr/g3ner1c/wikimedia-cli)](https://github.com/g3ner1c/wikimedia-cli/pulls)
 [![Repo stars](https://img.shields.io/github/stars/g3ner1c/wikimedia-cli?style=social)](https://github.com/g3ner1c/wikimedia-cli/stargazers)
 
-[![Supported Python versions](https://img.shields.io/pypi/pyversions/wikimedia-cli)](https://pypi.org/project/tetris/)
-[![PyPI version](https://img.shields.io/pypi/v/wikimedia-cli)](https://pypi.org/project/tetris/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/wikimedia-cli)](https://pypi.org/project/wikimedia-cli/)
+[![PyPI version](https://img.shields.io/pypi/v/wikimedia-cli)](https://pypi.org/project/wikimedia-cli/)
 
 A minimally dependent Wikimedia CLI written in Python
 
