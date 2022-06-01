@@ -1,6 +1,9 @@
+from wikimedia_cli import __version__
+
 project = "wikimedia-cli"
 author = 'Sky "g3ner1c" H.'
 copyright = '2022 Sky "g3ner1c" H.'
+release = __version__
 
 extensions = ["myst_parser"]  #! this is so that you can write docs in markdown instead of rst
 

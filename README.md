@@ -1,12 +1,14 @@
 # wikimedia-cli
 
-[![Documentation Status](https://readthedocs.org/projects/wikimedia-cli/badge/?version=latest)](https://wikimedia-cli.readthedocs.io/en/latest/?badge=latest)
+[![Documentation status](https://readthedocs.org/projects/wikimedia-cli/badge/?version=latest)](https://wikimedia-cli.readthedocs.io/en/latest/?badge=latest)
+[![Build status](https://img.shields.io/github/workflow/status/g3ner1c/wikimedia-cli/Test%20package)](https://www.codefactor.io/repository/github/g3ner1c/wikimedia-cli)
 [![CodeFactor](https://www.codefactor.io/repository/github/g3ner1c/wikimedia-cli/badge)](https://www.codefactor.io/repository/github/g3ner1c/wikimedia-cli)
 [![Open issues](https://img.shields.io/github/issues/g3ner1c/wikimedia-cli)](https://github.com/g3ner1c/wikimedia-cli/issues)
 [![Open PRs](https://img.shields.io/github/issues-pr/g3ner1c/wikimedia-cli)](https://github.com/g3ner1c/wikimedia-cli/pulls)
-[![License](https://img.shields.io/github/license/g3ner1c/wikimedia-cli)](./LICENSE)
-[![Python 3.x](https://img.shields.io/badge/python-3.x-green.svg)](https://www.python.org/)
 [![Repo stars](https://img.shields.io/github/stars/g3ner1c/wikimedia-cli?style=social)](https://github.com/g3ner1c/wikimedia-cli/stargazers)
+
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/wikimedia-cli)](https://pypi.org/project/tetris/)
+[![PyPI version](https://img.shields.io/pypi/v/wikimedia-cli)](https://pypi.org/project/tetris/)
 
 A minimally dependent Wikimedia CLI written in Python
 
@@ -47,5 +49,4 @@ Documentation will be built in the `docs/_build/html` directory
 - Revision history
 - Main page and ITN/Ongoing
 - Packaging
-  - PyPI
-  - AUR?
+  - AUR
