@@ -26,9 +26,8 @@ Documentation is available on **[ReadTheDocs](https://wikimedia-cli.readthedocs.
 To build the documentation locally, make sure you are in the root project directory and run:
 
 ```bash
+pip install Sphinx furo myst-parser
 cd docs
-pip install sphinx sphinx_rtd_theme
-pip install -r requirements.txt
 make html
 ```
 
