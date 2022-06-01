@@ -12,8 +12,10 @@ documentation = "https://wikimedia-cli.readthedocs.io/en/latest/"
 
 keywords = ["wikimedia", "wikipedia", "wiktionary", "cli"]
 
+packages = [ { include = "wikimedia-cli" }]
+
 [tool.poetry.dependencies]
-python = "^3.9"  
+python = "^3.7"  
 requests = "^2.27"
 Sphinx = { version = ">=4.4", optional = true }
 furo = { version = ">=2022", optional = true }
@@ -29,8 +31,11 @@ myst-parser = ">=0.17.0"
 docs = ["Sphinx", "furo", "myst-parser"]
 
 [tool.poetry.scripts]
-wiki = "wikimedia-cli:wiki"
+wiki = "__main__:main"
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tools.black]
+line-length = 119

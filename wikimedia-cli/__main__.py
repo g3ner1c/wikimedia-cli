@@ -390,4 +390,7 @@ def main():
 
             print(t_get(args.params, args.json, args.lang))
 
-main()
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
+    
