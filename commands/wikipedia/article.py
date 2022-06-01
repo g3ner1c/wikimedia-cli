@@ -1,5 +1,5 @@
-from .search import p_search
 from ..util import *
+from .search import p_search
 
 
 def p_article(title: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True) -> (str):

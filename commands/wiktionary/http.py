@@ -1,5 +1,7 @@
-import requests
 from json import loads
+
+import requests
+
 
 def t_get(params: list, json: bool = False, lang: str = "en") -> dict:
 

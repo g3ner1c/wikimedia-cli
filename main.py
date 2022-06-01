@@ -5,8 +5,8 @@ from commands.wikipedia.article import p_article
 from commands.wikipedia.http import p_get
 from commands.wikipedia.revision import p_revision_feed
 from commands.wikipedia.search import p_search
-from commands.wiktionary.phrase import t_phrase
 from commands.wiktionary.http import t_get
+from commands.wiktionary.phrase import t_phrase
 from commands.wiktionary.revision import t_revision_feed
 from commands.wiktionary.search import t_search
 

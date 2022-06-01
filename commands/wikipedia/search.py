@@ -1,5 +1,6 @@
 from ..util import *
 
+
 def p_search(query: str, results: int = 10, lang: str = "en") -> list[str]:
 
     #* returns list of articles close to query

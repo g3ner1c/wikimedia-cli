@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "wikimedia-cli"
+version = "0.1.0"
+description = "Minimally dependent CLI for Wikimedia projects"
+authors = ["Sky \"g3ner1c\" H. <g3ner1c-sky@pm.me>"]
+license = "MIT"
+readme = "README.md"
+
+homepage = "https://github.com/g3ner1c/wikimedia-cli"
+repository = "https://github.com/g3ner1c/wikimedia-cli"
+documentation = "https://wikimedia-cli.readthedocs.io/en/latest/"
+
+keywords = ["wikimedia", "wikipedia", "wiktionary", "cli"]
+
+[tool.poetry.dependencies]
+python = "^3.9"  
+requests = "^2.27"
+Sphinx = { version = ">=4.4", optional = true }
+furo = { version = ">=2022", optional = true }
+myst-parser = { version = ">=0.17.0", optional = true }
+
+[tool.poetry.dev-dependencies]
+tox = "^3.25"
+Sphinx = ">=4.4"
+furo = ">=2022"
+myst-parser = ">=0.17.0"
+
+[tool.poetry.extras]
+docs = ["Sphinx", "furo", "myst-parser"]
+
+[tool.poetry.scripts]
+wiki = "wikimedia-cli:wiki"
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

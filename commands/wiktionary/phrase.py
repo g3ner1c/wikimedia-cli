@@ -1,5 +1,5 @@
-from .search import t_search
 from ..util import *
+from .search import t_search
 
 
 def t_phrase(phrase: str, fill_width: int = 80, summary: bool = False, lang: str = "en", recurse: bool = True) -> (str):

@@ -1,6 +1,6 @@
-import requests
-
 from textwrap import wrap
+
+import requests
 
 
 def fill(text, width: int = 70, **kwargs):
